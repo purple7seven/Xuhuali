@@ -1,0 +1,7 @@
+pytorch:
+https://pytorch.org/docs/stable/torchvision/models.html
+
+torch.nn.DataParallel(model) //使用多个GPU跑模型
+model.gpu() //使用一个gpu跑模型
+
+torchvision.models.__dict__() //其中有无数模型可引用，如AlexNet，VGG，ResNet，SqueezeNet，DenseNet，Inception v3，GoogLeNet等。
