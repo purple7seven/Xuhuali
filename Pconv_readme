@@ -1,7 +1,34 @@
 pytorch:
 https://pytorch.org/docs/stable/torchvision/models.html
 
+PyTorch框架中有一个非常重要且好用的包：torchvision，该包主要由3个子包组成，分别是：torchvision.datasets、torchvision.models、torchvision.transforms。这3个子包的具体介绍可以参考官网：http://pytorch.org/docs/master/torchvision/index.html
+
 torch.nn.DataParallel(model) //使用多个GPU跑模型
 model.gpu() //使用一个gpu跑模型
 
 torchvision.models.__dict__() //其中有无数模型可引用，如AlexNet，VGG，ResNet，SqueezeNet，DenseNet，Inception v3，GoogLeNet等。
+
+model.cuda() //实现模型或数据从CPU到GPU的内存迁移
+
+损失函数：
+https://blog.csdn.net/zhangxb35/article/details/72464152
+
+transforms.RandomResizedCroop(x) //将输入图片随机截取成x*x大小的图片
+transforms.RandomHorizontalFlip() //将图片以0.5的概率翻转(即有一半的概率会翻转，有一半的概率不会翻转)
+transforms.ToTensor() //把一个取值范围是[0,255]的PIL.Image或者shape为(H,W,C)的numpy.ndarray，转换成形状为[C,H,W]
+
+torch.utils.data.DataLoader
+//先看看__init__中的几个重要的输入：1、dataset，这个就是PyTorch已有的数据读取接口（比如torchvision.datasets.ImageFolder）或者自定义的数据接口的输出，该输出要么是torch.utils.data.Dataset类的对象，要么是继承自torch.utils.data.Dataset类的自定义类的对象。2、batch_size，根据具体情况设置即可。3、shuffle，一般在训练数据中会采用。4、collate_fn，是用来处理不同情况下的输入dataset的封装，一般采用默认即可，除非你自定义的数据读取输出非常少见。5、batch_sampler，从注释可以看出，其和batch_size、shuffle等参数是互斥的，一般采用默认。6、sampler，从代码可以看出，其和shuffle是互斥的，一般默认即可。7、num_workers，从注释可以看出这个参数必须大于等于0，0的话表示数据导入在主进程中进行，其他大于0的数表示通过多个进程来导入数据，可以加快数据导入速度。8、pin_memory，注释写得很清楚了： pin_memory (bool, optional): If True, the data loader will copy tensors into CUDA pinned memory before returning them. 也就是一个数据拷贝的问题。9、timeout，是用来设置数据读取的超时时间的，但超过这个时间还没读取到数据的话就会报错。
+
+torchvision.transforms.Compose(transforms) //将多个变换组合起来使用
+
+enumerate() //enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中
+
+topk相关知识：
+https://blog.csdn.net/wu_x_j_/article/details/84204042
+
+optimizer.zero_grad() //把梯度置零，也就是把loss关于weight的导数变成0
+
+loss.backward() //反向传播损失
+
+optimizer.step() //更新参数，这是大多数optimizer所支持的简化版本。一旦梯度被如backward()之类的函数计算好后，我们就可以调用这个函数
